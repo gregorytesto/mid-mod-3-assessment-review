@@ -9,7 +9,12 @@ class App extends Component{
     super();
     this.state = {
       cartArr: [],
-      subTotal: 0
+      subTotal: 0,
+      firstName: "",
+      lastName: "",
+      email: "",
+      creditCard: "",
+      zipCode: ""
     }
   }
 
@@ -18,6 +23,26 @@ class App extends Component{
       cartArr: [ ...this.state.cartArr, product ],
       subTotal: this.state.subTotal + product.price
     })
+  }
+
+  handleFirstNameChange=(e)=>{
+    this.setState({
+      firstName: e.target.value
+    })
+  }
+
+  validateInputs=()=>{
+    if(this.state.firstName.length < 3){
+      return "The name field is too short";
+    } else {
+      return "Purchase complete";
+    }
+  }
+
+  handleSubmit=(e)=>{
+    e.preventDefault();
+    let message = this.validateInputs();
+    alert(message);
   }
 
   render(){
@@ -71,7 +96,45 @@ class App extends Component{
 
           {/* // Checkout */}
           <h1>Checkout</h1>
-          <form></form>
+          <form onSubmit={this.handleSubmit}>
+
+            <div className="input-container">
+              <label htmlFor="first-name">First Name</label>
+              <br />
+              <input 
+                type="text" 
+                id="first-name"
+                value={this.state.firstName}
+                onChange={this.handleFirstNameChange}
+              />
+            </div>
+
+            <div className="input-container">
+              <label htmlFor="last-name">Last Name</label>
+              <br />
+              <input type="text" id="last-name" />
+            </div>
+
+            <div className="input-container">
+              <label htmlFor="email">Email</label>
+              <br />
+              <input type="text" id="email" />
+            </div>
+
+            <div className="input-container">
+              <label htmlFor="credit-card">Credit Card</label>
+              <br />
+              <input type="text" id="credit-card" />
+            </div>
+
+            <div className="input-container">
+              <label htmlFor="zip-code">Zip Code</label>
+              <br />
+              <input type="text" id="zip-code" />
+            </div>
+            
+            <button type="submit">Buy Now</button>
+          </form>
         </div>
       </div>
     )
